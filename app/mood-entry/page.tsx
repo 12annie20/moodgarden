@@ -49,14 +49,20 @@ export default function MoodEntryPage() {
     setSaving(true)
     try {
       const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { router.push('/login'); return }
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user) { router.push('/login'); return }
 
-      await supabase
+      // Ensure a row exists in our users table (first login)
+      const { error: upsertError } = await supabase
         .from('users')
         .upsert({ id: user.id }, { onConflict: 'id', ignoreDuplicates: true })
 
-      const { error } = await supabase.from('mood_entries').insert({
+      if (upsertError) {
+        console.error('users upsert failed:', upsertError.message, upsertError)
+        throw new Error(`建立使用者失敗：${upsertError.message}`)
+      }
+
+      const { error: insertError } = await supabase.from('mood_entries').insert({
         user_id:            user.id,
         primary_emotion:    emotion,
         plutchik_intensity: intensity,
@@ -66,11 +72,15 @@ export default function MoodEntryPage() {
         is_public:          false,
       })
 
-      if (error) throw error
+      if (insertError) {
+        console.error('mood_entries insert failed:', insertError.message, insertError)
+        throw new Error(`儲存情緒失敗：${insertError.message}`)
+      }
+
       router.push('/garden')
-    } catch (err) {
-      console.error(err)
-      alert('儲存失敗，請重試')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : JSON.stringify(err)
+      alert(`儲存失敗：${msg}`)
     } finally {
       setSaving(false)
     }
