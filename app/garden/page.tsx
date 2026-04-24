@@ -30,16 +30,14 @@ export default async function GardenPage() {
 
   if (!user) redirect('/login')
 
-  // Ensure this auth user has a row in our users table
+  // Ensure this auth user has a row in our users table.
+  // Only supply the two NOT NULL columns that have no schema default.
   await supabase
     .from('users')
     .upsert({
       id: user.id,
       anonymous_nickname: '旅人' + user.id.slice(-4),
       avatar_seed: user.id.slice(0, 8),
-      period_module_enabled: false,
-      auth_provider: 'google',
-      notification_times: ['08:00', '20:00'],
     }, { onConflict: 'id', ignoreDuplicates: true })
 
   // Fetch the 5 most recent mood entries for this user

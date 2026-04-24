@@ -52,16 +52,14 @@ export default function MoodEntryPage() {
       const { data: { user }, error: authError } = await supabase.auth.getUser()
       if (authError || !user) { router.push('/login'); return }
 
-      // Ensure a row exists in our users table (first login)
+      // Ensure a row exists in our users table (first login).
+      // Only supply the two NOT NULL columns that have no schema default.
       const { error: upsertError } = await supabase
         .from('users')
         .upsert({
           id: user.id,
           anonymous_nickname: '旅人' + user.id.slice(-4),
           avatar_seed: user.id.slice(0, 8),
-          period_module_enabled: false,
-          auth_provider: 'google',
-          notification_times: ['08:00', '20:00'],
         }, { onConflict: 'id', ignoreDuplicates: true })
 
       if (upsertError) {
