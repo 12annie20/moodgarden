@@ -1,7 +1,7 @@
 -- MoodGarden Supabase / Postgres Schema
--- Version: 0.1.0 (MVP)
--- Usage: paste into Supabase SQL Editor and run. Extensions enabled by default on Supabase.
--- All tables use UUID primary keys and reference auth.users for identity.
+-- Version: 0.1.1 (MVP, idempotent)
+-- Usage: paste into Supabase SQL Editor and run.
+-- Safe to run multiple times — all CREATE statements use IF NOT EXISTS / exception guards.
 
 -- ================================================================
 -- ENUMS
@@ -51,9 +51,17 @@ create table if not exists public.users (
 
 alter table public.users enable row level security;
 
-create policy users_self_read on public.users for select using (auth.uid() = id);
-create policy users_self_update on public.users for update using (auth.uid() = id);
-create policy users_self_insert on public.users for insert with check (auth.uid() = id);
+do $$ begin
+  create policy users_self_read on public.users for select using (auth.uid() = id);
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create policy users_self_update on public.users for update using (auth.uid() = id);
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create policy users_self_insert on public.users for insert with check (auth.uid() = id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -78,8 +86,10 @@ create index if not exists mood_entries_user_time_idx
 
 alter table public.mood_entries enable row level security;
 
-create policy mood_self_all on public.mood_entries for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+do $$ begin
+  create policy mood_self_all on public.mood_entries for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -99,8 +109,11 @@ create table if not exists public.creatures (
 create index if not exists creatures_user_idx on public.creatures (user_id);
 
 alter table public.creatures enable row level security;
-create policy creatures_self_all on public.creatures for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy creatures_self_all on public.creatures for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -116,8 +129,11 @@ create table if not exists public.gardens (
 );
 
 alter table public.gardens enable row level security;
-create policy gardens_self_all on public.gardens for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy gardens_self_all on public.gardens for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -135,9 +151,20 @@ create table if not exists public.social_posts (
 create index if not exists social_posts_time_idx on public.social_posts (created_at desc);
 
 alter table public.social_posts enable row level security;
-create policy social_public_read on public.social_posts for select using (true);
-create policy social_author_insert on public.social_posts for insert with check (auth.uid() = user_id);
-create policy social_author_delete on public.social_posts for delete using (auth.uid() = user_id);
+
+do $$ begin
+  create policy social_public_read on public.social_posts for select using (true);
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create policy social_author_insert on public.social_posts for insert
+    with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  create policy social_author_delete on public.social_posts for delete
+    using (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -155,9 +182,11 @@ create table if not exists public.resonances (
 create index if not exists resonances_post_idx on public.resonances (post_id);
 
 alter table public.resonances enable row level security;
--- Users cannot browse other users' resonance records to avoid comparison anxiety.
-create policy resonances_self_all on public.resonances for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy resonances_self_all on public.resonances for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -175,7 +204,10 @@ create table if not exists public.song_cards (
 );
 
 alter table public.song_cards enable row level security;
-create policy song_cards_public_read on public.song_cards for select using (true);
+
+do $$ begin
+  create policy song_cards_public_read on public.song_cards for select using (true);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -190,11 +222,15 @@ create table if not exists public.user_card_draws (
   drawn_at timestamptz not null default now()
 );
 
-create index if not exists user_card_draws_user_idx on public.user_card_draws (user_id, drawn_at desc);
+create index if not exists user_card_draws_user_idx
+  on public.user_card_draws (user_id, drawn_at desc);
 
 alter table public.user_card_draws enable row level security;
-create policy user_card_draws_self_all on public.user_card_draws for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy user_card_draws_self_all on public.user_card_draws for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -210,11 +246,15 @@ create table if not exists public.period_cycles (
   predicted_next_start date
 );
 
-create index if not exists period_cycles_user_idx on public.period_cycles (user_id, start_date desc);
+create index if not exists period_cycles_user_idx
+  on public.period_cycles (user_id, start_date desc);
 
 alter table public.period_cycles enable row level security;
-create policy period_cycles_self_all on public.period_cycles for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy period_cycles_self_all on public.period_cycles for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -233,11 +273,15 @@ create table if not exists public.period_logs (
   unique (user_id, log_date)
 );
 
-create index if not exists period_logs_user_date_idx on public.period_logs (user_id, log_date desc);
+create index if not exists period_logs_user_date_idx
+  on public.period_logs (user_id, log_date desc);
 
 alter table public.period_logs enable row level security;
-create policy period_logs_self_all on public.period_logs for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy period_logs_self_all on public.period_logs for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -261,14 +305,19 @@ create table if not exists public.knowledge_cards (
   created_at timestamptz not null default now()
 );
 
-create index if not exists knowledge_cards_status_idx on public.knowledge_cards (status, type);
+create index if not exists knowledge_cards_status_idx
+  on public.knowledge_cards (status, type);
 
 alter table public.knowledge_cards enable row level security;
-create policy knowledge_cards_published_read on public.knowledge_cards for select using (status = 'published');
+
+do $$ begin
+  create policy knowledge_cards_published_read on public.knowledge_cards
+    for select using (status = 'published');
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
--- card_deliveries  (what we've shown each user — dedupe + analytics)
+-- card_deliveries
 -- ================================================================
 
 create table if not exists public.card_deliveries (
@@ -280,11 +329,15 @@ create table if not exists public.card_deliveries (
   helpful_rating smallint check (helpful_rating between -1 and 1)
 );
 
-create index if not exists card_deliveries_user_idx on public.card_deliveries (user_id, delivered_at desc);
+create index if not exists card_deliveries_user_idx
+  on public.card_deliveries (user_id, delivered_at desc);
 
 alter table public.card_deliveries enable row level security;
-create policy card_deliveries_self_all on public.card_deliveries for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy card_deliveries_self_all on public.card_deliveries for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
 
 
 -- ================================================================
@@ -303,5 +356,8 @@ create table if not exists public.push_subscriptions (
 );
 
 alter table public.push_subscriptions enable row level security;
-create policy push_subs_self_all on public.push_subscriptions for all
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+do $$ begin
+  create policy push_subs_self_all on public.push_subscriptions for all
+    using (auth.uid() = user_id) with check (auth.uid() = user_id);
+exception when duplicate_object then null; end $$;
