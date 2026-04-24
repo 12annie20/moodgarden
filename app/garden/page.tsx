@@ -36,6 +36,10 @@ export default async function GardenPage() {
     .upsert({
       id: user.id,
       anonymous_nickname: '旅人' + user.id.slice(-4),
+      avatar_seed: user.id.slice(0, 8),
+      period_module_enabled: false,
+      auth_provider: 'google',
+      notification_times: ['08:00', '20:00'],
     }, { onConflict: 'id', ignoreDuplicates: true })
 
   // Fetch the 5 most recent mood entries for this user
