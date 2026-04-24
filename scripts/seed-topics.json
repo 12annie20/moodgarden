@@ -1,0 +1,275 @@
+{
+  "description": "30 psychology topic seeds for the knowledge-card generation pipeline. Each topic maps to OpenAlex/Crossref search queries and targets specific Plutchik emotions and/or menstrual cycle phases.",
+  "topics": [
+    {
+      "id": "emotion-granularity",
+      "title_zh": "情緒粒度",
+      "title_en": "Emotion Granularity",
+      "category": "regulation",
+      "target_emotions": ["sadness", "fear", "anger", "disgust"],
+      "target_phase": null,
+      "search_queries": ["emotion granularity", "emotional differentiation", "Feldman Barrett emotional granularity"]
+    },
+    {
+      "id": "cognitive-reappraisal",
+      "title_zh": "認知重評",
+      "title_en": "Cognitive Reappraisal",
+      "category": "regulation",
+      "target_emotions": ["anger", "fear", "sadness"],
+      "target_phase": null,
+      "search_queries": ["cognitive reappraisal emotion regulation", "Gross reappraisal strategy", "reappraisal well-being"]
+    },
+    {
+      "id": "rumination",
+      "title_zh": "反芻思考",
+      "title_en": "Rumination",
+      "category": "regulation",
+      "target_emotions": ["sadness", "anger", "fear"],
+      "target_phase": "luteal",
+      "search_queries": ["rumination depression", "repetitive negative thinking intervention", "brooding vs reflection"]
+    },
+    {
+      "id": "self-compassion",
+      "title_zh": "自我慈悲",
+      "title_en": "Self-Compassion",
+      "category": "regulation",
+      "target_emotions": ["sadness", "disgust", "fear"],
+      "target_phase": "menstrual",
+      "search_queries": ["self-compassion Neff", "self-compassion mental health", "self-compassion vs self-esteem"]
+    },
+    {
+      "id": "act-acceptance",
+      "title_zh": "接納承諾療法",
+      "title_en": "Acceptance and Commitment Therapy (ACT)",
+      "category": "cbt",
+      "target_emotions": ["fear", "sadness", "anger"],
+      "target_phase": null,
+      "search_queries": ["acceptance commitment therapy ACT outcomes", "psychological flexibility ACT", "ACT anxiety depression RCT"]
+    },
+    {
+      "id": "mindfulness-emotion",
+      "title_zh": "正念與情緒",
+      "title_en": "Mindfulness and Emotion Regulation",
+      "category": "mindfulness",
+      "target_emotions": ["fear", "anger", "anticipation"],
+      "target_phase": null,
+      "search_queries": ["mindfulness emotion regulation", "MBSR MBCT mental health", "mindfulness stress reduction RCT"]
+    },
+    {
+      "id": "affect-labeling",
+      "title_zh": "情緒命名效應",
+      "title_en": "Affect Labeling",
+      "category": "regulation",
+      "target_emotions": ["fear", "anger", "sadness"],
+      "target_phase": null,
+      "search_queries": ["affect labeling emotion regulation fMRI", "putting feelings into words", "Lieberman affect labeling"]
+    },
+    {
+      "id": "gratitude-practice",
+      "title_zh": "感恩練習",
+      "title_en": "Gratitude Practice",
+      "category": "positive",
+      "target_emotions": ["joy", "trust", "anticipation"],
+      "target_phase": "follicular",
+      "search_queries": ["gratitude intervention well-being", "gratitude journal mental health", "three good things exercise"]
+    },
+    {
+      "id": "breathing-anxiety",
+      "title_zh": "呼吸調節與焦慮",
+      "title_en": "Breathing Techniques for Anxiety",
+      "category": "somatic",
+      "target_emotions": ["fear", "surprise"],
+      "target_phase": "luteal",
+      "search_queries": ["slow breathing anxiety regulation", "physiological sigh stress", "box breathing HRV"]
+    },
+    {
+      "id": "sleep-emotion",
+      "title_zh": "睡眠與情緒調節",
+      "title_en": "Sleep and Emotional Regulation",
+      "category": "body-emotion",
+      "target_emotions": ["sadness", "anger", "fear"],
+      "target_phase": "luteal",
+      "search_queries": ["sleep deprivation emotion regulation", "REM sleep emotional memory", "insomnia emotional reactivity"]
+    },
+    {
+      "id": "exercise-mood",
+      "title_zh": "運動與情緒",
+      "title_en": "Exercise and Mood",
+      "category": "body-emotion",
+      "target_emotions": ["sadness", "fear"],
+      "target_phase": "menstrual",
+      "search_queries": ["exercise depression meta-analysis", "physical activity mood improvement", "aerobic exercise anxiety"]
+    },
+    {
+      "id": "nutrition-mood",
+      "title_zh": "飲食與情緒",
+      "title_en": "Nutrition and Mood",
+      "category": "body-emotion",
+      "target_emotions": ["sadness", "anger"],
+      "target_phase": "menstrual",
+      "search_queries": ["diet mental health", "omega-3 depression", "tryptophan serotonin mood", "iron deficiency mood"]
+    },
+    {
+      "id": "pms-cbt",
+      "title_zh": "PMS 認知行為介入",
+      "title_en": "CBT for Premenstrual Syndrome",
+      "category": "cbt",
+      "target_emotions": ["anger", "sadness", "fear"],
+      "target_phase": "luteal",
+      "search_queries": ["CBT premenstrual syndrome", "cognitive behavioral therapy PMS PMDD", "psychotherapy premenstrual symptoms"]
+    },
+    {
+      "id": "cycle-mood",
+      "title_zh": "月經週期與情緒波動",
+      "title_en": "Menstrual Cycle and Mood Variability",
+      "category": "cycle",
+      "target_emotions": ["sadness", "anger", "fear"],
+      "target_phase": "luteal",
+      "search_queries": ["menstrual cycle mood variability", "premenstrual dysphoric disorder PMDD", "luteal phase emotional symptoms"]
+    },
+    {
+      "id": "cycle-cognition",
+      "title_zh": "月經週期與認知表現",
+      "title_en": "Menstrual Cycle and Cognition",
+      "category": "cycle",
+      "target_emotions": ["anticipation", "surprise"],
+      "target_phase": "follicular",
+      "search_queries": ["menstrual cycle cognitive performance", "estrogen cognition", "follicular phase creativity"]
+    },
+    {
+      "id": "ovulation-social",
+      "title_zh": "排卵期與社交行為",
+      "title_en": "Ovulation and Social Behavior",
+      "category": "cycle",
+      "target_emotions": ["joy", "trust", "anticipation"],
+      "target_phase": "ovulation",
+      "search_queries": ["ovulation social behavior", "estradiol peak social motivation", "ovulatory cycle attractiveness"]
+    },
+    {
+      "id": "menstrual-pain-management",
+      "title_zh": "月經疼痛的非藥物緩解",
+      "title_en": "Non-pharmacological Period Pain Relief",
+      "category": "cycle",
+      "target_emotions": ["fear", "sadness"],
+      "target_phase": "menstrual",
+      "search_queries": ["dysmenorrhea non-pharmacological treatment", "heat therapy menstrual cramps", "yoga dysmenorrhea RCT"]
+    },
+    {
+      "id": "loneliness",
+      "title_zh": "孤獨感與心理健康",
+      "title_en": "Loneliness and Mental Health",
+      "category": "social",
+      "target_emotions": ["sadness", "fear"],
+      "target_phase": null,
+      "search_queries": ["loneliness mental health intervention", "social isolation health outcomes", "loneliness epidemic young adults"]
+    },
+    {
+      "id": "social-support-emotion",
+      "title_zh": "社會支持與壓力調節",
+      "title_en": "Social Support and Stress Buffering",
+      "category": "social",
+      "target_emotions": ["fear", "sadness", "trust"],
+      "target_phase": null,
+      "search_queries": ["social support stress buffering hypothesis", "perceived social support mental health", "social connection cortisol"]
+    },
+    {
+      "id": "perfectionism",
+      "title_zh": "完美主義與情緒",
+      "title_en": "Perfectionism and Emotional Wellbeing",
+      "category": "regulation",
+      "target_emotions": ["fear", "anger", "disgust"],
+      "target_phase": null,
+      "search_queries": ["maladaptive perfectionism anxiety depression", "perfectionism emotional dysregulation", "perfectionism intervention"]
+    },
+    {
+      "id": "procrastination-emotion",
+      "title_zh": "拖延與情緒調節",
+      "title_en": "Procrastination and Emotion Regulation",
+      "category": "regulation",
+      "target_emotions": ["fear", "disgust", "sadness"],
+      "target_phase": null,
+      "search_queries": ["procrastination emotion regulation", "avoidance coping procrastination", "procrastination self-compassion"]
+    },
+    {
+      "id": "expressive-writing",
+      "title_zh": "情緒書寫與心理健康",
+      "title_en": "Expressive Writing (Pennebaker)",
+      "category": "regulation",
+      "target_emotions": ["sadness", "fear", "anger"],
+      "target_phase": null,
+      "search_queries": ["expressive writing Pennebaker", "journaling emotional health", "writing disclosure immune function"]
+    },
+    {
+      "id": "attachment-style",
+      "title_zh": "依戀風格與情緒調節",
+      "title_en": "Attachment Styles and Emotion Regulation",
+      "category": "relational",
+      "target_emotions": ["fear", "trust", "sadness"],
+      "target_phase": null,
+      "search_queries": ["attachment style emotion regulation", "anxious avoidant attachment mental health", "adult attachment theory"]
+    },
+    {
+      "id": "emotion-dysregulation",
+      "title_zh": "情緒失調的辨識與因應",
+      "title_en": "Emotion Dysregulation Recognition and Coping",
+      "category": "clinical",
+      "target_emotions": ["anger", "sadness", "fear", "disgust"],
+      "target_phase": null,
+      "search_queries": ["emotion dysregulation clinical intervention", "DBT emotion regulation skills", "emotional reactivity reduction"]
+    },
+    {
+      "id": "resilience",
+      "title_zh": "心理韌性的建構",
+      "title_en": "Building Psychological Resilience",
+      "category": "positive",
+      "target_emotions": ["fear", "sadness", "anticipation"],
+      "target_phase": null,
+      "search_queries": ["psychological resilience mechanisms", "resilience intervention meta-analysis", "post-traumatic growth resilience"]
+    },
+    {
+      "id": "anger-regulation",
+      "title_zh": "憤怒的情緒調節策略",
+      "title_en": "Anger Regulation Strategies",
+      "category": "regulation",
+      "target_emotions": ["anger"],
+      "target_phase": "luteal",
+      "search_queries": ["anger management strategies efficacy", "anger rumination intervention", "suppression vs expression anger"]
+    },
+    {
+      "id": "anticipatory-anxiety",
+      "title_zh": "預期性焦慮",
+      "title_en": "Anticipatory Anxiety",
+      "category": "clinical",
+      "target_emotions": ["fear", "anticipation"],
+      "target_phase": null,
+      "search_queries": ["anticipatory anxiety neural mechanisms", "worry future events intervention", "uncertainty intolerance anxiety"]
+    },
+    {
+      "id": "positive-emotions-broaden",
+      "title_zh": "正向情緒的拓展建構",
+      "title_en": "Broaden-and-Build Theory (Fredrickson)",
+      "category": "positive",
+      "target_emotions": ["joy", "trust", "anticipation"],
+      "target_phase": "follicular",
+      "search_queries": ["broaden and build theory Fredrickson", "positive emotions resilience resources", "upward spiral positive affect"]
+    },
+    {
+      "id": "iron-menstrual",
+      "title_zh": "月經週期與鐵質補充",
+      "title_en": "Iron Status and Menstrual Health",
+      "category": "cycle",
+      "target_emotions": ["sadness", "fear"],
+      "target_phase": "menstrual",
+      "search_queries": ["iron deficiency anemia menstruation", "ferritin fatigue menstrual cycle", "dietary iron menstrual symptoms"]
+    },
+    {
+      "id": "magnesium-pms",
+      "title_zh": "鎂與 PMS 症狀",
+      "title_en": "Magnesium for PMS Relief",
+      "category": "cycle",
+      "target_emotions": ["anger", "sadness"],
+      "target_phase": "luteal",
+      "search_queries": ["magnesium supplementation premenstrual syndrome", "magnesium mood anxiety", "Mg deficiency PMS RCT"]
+    }
+  ]
+}
