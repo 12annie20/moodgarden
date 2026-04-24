@@ -33,7 +33,10 @@ export default async function GardenPage() {
   // Ensure this auth user has a row in our users table
   await supabase
     .from('users')
-    .upsert({ id: user.id }, { onConflict: 'id', ignoreDuplicates: true })
+    .upsert({
+      id: user.id,
+      anonymous_nickname: '旅人' + user.id.slice(-4),
+    }, { onConflict: 'id', ignoreDuplicates: true })
 
   // Fetch the 5 most recent mood entries for this user
   const { data: entries } = await supabase

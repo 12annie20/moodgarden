@@ -55,7 +55,10 @@ export default function MoodEntryPage() {
       // Ensure a row exists in our users table (first login)
       const { error: upsertError } = await supabase
         .from('users')
-        .upsert({ id: user.id }, { onConflict: 'id', ignoreDuplicates: true })
+        .upsert({
+          id: user.id,
+          anonymous_nickname: '旅人' + user.id.slice(-4),
+        }, { onConflict: 'id', ignoreDuplicates: true })
 
       if (upsertError) {
         console.error('users upsert failed:', upsertError.message, upsertError)
